@@ -26,7 +26,7 @@ export default function CategorySlider({ title }) {
         slidesPerView: showPerPage,
         spaceBetween: 50,
         freeMode: true,
-        loop: true,
+        loop: (data.length <= showPerPage) ? false : true,
         pagination: { clickable: true, },
         modules: [FreeMode, Pagination],
         className: "mySwiper",
@@ -38,7 +38,7 @@ export default function CategorySlider({ title }) {
         else if (window.innerWidth < 768)
             setShowPerPage(2)
         else
-            setShowPerPage("Brand" ? 6 : 3)
+            setShowPerPage(title === "Brand" ? 6 : 3)
     }
     window.addEventListener("resize", handelWindowResize)
 
@@ -73,11 +73,11 @@ export default function CategorySlider({ title }) {
                 </div>
 
                 <div className="container" data-aos="fade-up" data-aos-delay="100">
-                    <Swiper {...options}>
+                    <Swiper key={`${data.length > showPerPage}`} {...options}>
                         {
                             data.map((item) => {
                                 return <SwiperSlide key={item.id}>
-                                    <Link to={`/shop?${title==="Maincategory"?"mc":(title==="Subcategory"?"sc":"br")}=${item.name}`}>
+                                    <Link to={`/shop?${title === "Maincategory" ? "mc" : (title === "Subcategory" ? "sc" : "br")}=${item.name}`}>
                                         <img src={`${process.env.REACT_APP_BACKEND_SERVER}${item.pic}`} style={{ height: title === "Brand" ? 100 : 300 }} className="w-100" alt="" />
                                     </Link>
                                 </SwiperSlide>

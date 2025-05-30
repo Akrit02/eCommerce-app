@@ -14,7 +14,7 @@ export default function ProductsSlider({ title, data }) {
         slidesPerView: showPerPage,
         spaceBetween: 50,
         freeMode: true,
-        loop: true,
+        loop: (data.length <= showPerPage) ? false : true,
         pagination: false,
         modules: [FreeMode, Pagination],
         className: "mySwiper",
